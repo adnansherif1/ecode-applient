@@ -3,45 +3,57 @@ window.addEventListener("load", initPopup);
 
 function initPopup() {
   console.log("starting!");
+  // creating corresponds to resume section
   $("#creating").css("background-color", "lightblue");
+  // creating section is hidden as the autofilling section is shown by default. It is swapped by the
+  // the creating section when the Create mode button is pressed
   $('.creating').hide();
   document.getElementById("form").addEventListener("submit", form);
-  //add experiences
+  //button that swaps to filling mode
   document.getElementById("filling").addEventListener("click", function () {
     toggleActivity("filling");
   });
+  // button that swaps to creating mode
   document.getElementById("creating").addEventListener("click", function () {
     toggleActivity("creating");
   });
+
+  // button that adds a new experience in the filling mode (autofiller)
   document
     .getElementById("experience-add")
     .addEventListener("click", function () {
       createExperience(numFieldset("#fieldset-experiences"), $("#fieldset-experiences"))
-    });
-
+    }); 
+  // button that adds new experiences in the first categroy in the creating mode( reusme generation)
   document
     .getElementById("category-one-add")
     .addEventListener("click", function () {
       createExperience(numFieldset("#category1"), $("#category1"))
     });
+  // button that adds new experiences in the second category in the creating mode (resume generation)
   document
     .getElementById("category-two-add")
     .addEventListener("click", function () {
       createExperience(numFieldset("#category2"), $("#category2"))
     });
+  // button that adds new experiences in the  third category in the creating mode (resume geenration)
   document
     .getElementById("category-three-add")
     .addEventListener("click", function () {
       createExperience(numFieldset("#category3"), $("#category3"))
     });
+  // button that calls the function to collect and save all the information in both the autofilling 
+  // and resume creating mode to the chrome extension or the remote server
   document
     .getElementById("application-save")
     .addEventListener("click", saveData);
 
+  //the delete button present inside each experience that deletes the experience.
   $(document).on('click', '.delete', function () {
     $(this).parent().parent().remove()
   })
 
+  // the moveup button inside each experience that  swaps the experience with the one above it
   $(document).on('click', '.moveUp', function () {
     var fieldsetElement = $(this).parent().parent();
     if ($(fieldsetElement).prev().prop('tagName') === "FIELDSET") {
@@ -52,7 +64,7 @@ function initPopup() {
       $(fieldsetElement).insertBefore($(fieldsetElement).prev())
     };
   });
-
+  // the movedown button inside each experience that swaps the experience with the one below it
   $(document).on('click', '.moveDown', function () {
     var fieldsetElement = $(this).parent().parent();
     if ($(fieldsetElement).next().prop('tagName') === "FIELDSET") {
@@ -64,10 +76,13 @@ function initPopup() {
       $(fieldsetElement).insertAfter($(fieldsetElement).next())
     };
   });
-
+  // these are the other buttons on the navigation bar correpsonding to the search mode and track mode
+  //the following code sets the color of those buttons
   $("#searching").css("background-color", "lightblue");
   $("#tracking").css("background-color", "lightblue");
   $("#app-fill").hide();
+  //the follwoing code loads the data from the extension and displays it in the correspondinng sections
+  // and input boxes
   data_loader('userinfo', dataHandler);
   data_loader('table_data', function (data) {
     if(data) {} else{

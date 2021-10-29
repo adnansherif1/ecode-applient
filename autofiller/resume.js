@@ -18,12 +18,20 @@ function initPopup() {
     toggleActivity("creating");
   });
 
+
+  document
+    .getElementById("education-add")
+    .addEventListener("click", function () {
+      createEducation(numFieldset("#education-information"), $("#education-information"))
+    });
+
+
   // button that adds a new experience in the filling mode (autofiller)
   document
     .getElementById("experience-add")
     .addEventListener("click", function () {
       createExperience(numFieldset("#fieldset-experiences"), $("#fieldset-experiences"))
-    }); 
+    });
   // button that adds new experiences in the first categroy in the creating mode( reusme generation)
   document
     .getElementById("category-one-add")
@@ -85,10 +93,10 @@ function initPopup() {
   // and input boxes
   data_loader('userinfo', dataHandler);
   data_loader('table_data', function (data) {
-    if(data) {} else{
+    if (data) { } else {
 
       var result = {};
-      data_saver(result,'table_data');
+      data_saver(result, 'table_data');
     }
   });
 
@@ -175,11 +183,11 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         var currTab = tabs[0];   
    console.log(currTab);
    chrome.tabs.executeScript(currTab.id, { file: "jquery-3.1.1.min.js" }, function() {
-   	console.log('first');
+      console.log('first');
     chrome.tabs.executeScript(currTab.id, { file: "faker.js" }, function() {
-    	console.log('third');
+      console.log('third');
         chrome.tabs.executeScript(currTab.id, { file: "run.js" }, function () {
-        	console.log('forth');
+          console.log('forth');
         });
       });  
     }); 
@@ -226,7 +234,7 @@ function createSubTextArea() {
   var textarea = $(
     '<textarea class="role-version" style="height: 100%; max-height: 200px; min-height: 100px;"></textarea>'
   );
-  $(textarea).on("input",function () {
+  $(textarea).on("input", function () {
     if ($(this).parent().parent().find(".selected").prop("checked")) {
       $(this).closest("fieldset").find(".role-description").focus().val($(this).focus().val());
     }
@@ -342,6 +350,25 @@ function createExperience(num, category) {
   return fieldset;
 }
 
+//add in an Education Section
+function createEducation(num, category) {
+  console.log("add another education")
+  var fieldset = $("<fieldset></fieldset>");
+  $(fieldset).append(createSelector(num))
+  $(fieldset).append("<legend>Education " + num + "</legend>");
+  $(fieldset).append(createInput("School or University", "text", "schoolOrUni"));
+  $(fieldset).append(createInput("Field of Study", "text", "FOS"));
+  $(fieldset).append(createInput("GPA", "text", "GPA"));
+  $(fieldset).append(createInput("From", "month", "from"));
+  $(fieldset).append(createInput("To (Actual or Expected)", "month", "to"));
+  $(fieldset).append(createTextArea("Role Description", "role-description"));
+
+  $(category).append(fieldset)
+  return fieldset;
+
+
+}
+
 function saveData() {
   var application = {};
   var personal = $("#personal-information");
@@ -399,11 +426,11 @@ function saveData() {
       application["experience"][num]["versionnum"] = versions;
     });
   /*
-	var selArr = []
-	for(var j = 1; j <=num; j++) {
-		selArr.push(j);
-	}
-	*/
+  var selArr = []
+  for(var j = 1; j <=num; j++) {
+    selArr.push(j);
+  }
+  */
   application["experience"]["num"] = num;
   application["experience"]["sel"] = sel;
   //chrome.storage.sync.set(application, function () {});

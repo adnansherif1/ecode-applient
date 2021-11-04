@@ -357,6 +357,8 @@ function createEducation(num, category) {
   $(fieldset).append(createSelector(num))
   $(fieldset).append("<legend>Education " + num + "</legend>");
   $(fieldset).append(createInput("School or University", "text", "schoolOrUni"));
+  //adds degree dropdown
+  $(fieldset).append(createDropdown("Degree", ['Bachelors', 'Masterss'], "state", "state"));
   $(fieldset).append(createInput("Field of Study", "text", "FOS"));
   $(fieldset).append(createInput("GPA", "text", "GPA"));
   $(fieldset).append(createInput("From", "month", "from"));
@@ -366,6 +368,22 @@ function createEducation(num, category) {
   $(category).append(fieldset)
   return fieldset;
 
+
+}
+
+function createDropdown(labelText, arrayValue, inpType, inpClass) {
+  var label = $("<label></label>").text(labelText)
+  var select = $("<select id = " + inpType + " class= " + inpClass + "></select>");
+
+
+  //for each i in arrayValue, append the value to option
+  arrayValue.forEach(element =>
+    $(select).append($("<option></option>").text(element))
+  );
+  var div = $("<div></div>");
+  $(div).append(label)
+  $(div).append(select)
+  return div
 
 }
 

@@ -1,6 +1,13 @@
 sel = [];
 window.addEventListener("load", initPopup);
 
+//creates initial education section
+
+window.onload = function () {
+  createEducation(numFieldset("#education-information"), $("#education-information"))
+};
+
+
 function initPopup() {
   console.log("starting!");
   // creating corresponds to resume section
@@ -16,11 +23,12 @@ function initPopup() {
   // button that swaps to creating mode
   document.getElementById("creating").addEventListener("click", function () {
     toggleActivity("creating");
-  });
-
+  })
 
   document
     .getElementById("education-add")
+
+    //button to add a new education section
     .addEventListener("click", function () {
       createEducation(numFieldset("#education-information"), $("#education-information"))
     });
@@ -207,7 +215,10 @@ function createInput(labelText, inpType, inpClass) {
 function createSubTextArea() {
   var inp = $('<input type="checkbox"class="selected"/>');
   var deleteButton = $("<button class = 'delete' ><i class='fas fa-times'></i></button>")
+
+  //when the input changes run the statement
   $(inp).change(function () {
+    // this.propchecked says if "this" (input) is checked, then save the value, if not do nothing.
     if ($(this).prop("checked")) {
       var value = $(this).parent().parent().find(".role-version").focus().val();
       console.log("role: " + value);
@@ -234,9 +245,12 @@ function createSubTextArea() {
   var textarea = $(
     '<textarea class="role-version" style="height: 100%; max-height: 200px; min-height: 100px;"></textarea>'
   );
+  //not sure what this does
   $(textarea).on("input", function () {
+
     if ($(this).parent().parent().find(".selected").prop("checked")) {
       $(this).closest("fieldset").find(".role-description").focus().val($(this).focus().val());
+      console.log($(this).closest("fieldset").find(".role-description").focus().val())
     }
   });
   var div1 = $('<div style="float:left; width: 10%"></div>');
@@ -262,6 +276,7 @@ function initSubTextArea() {
   var divOuter = $('<div class="versionsOuter"></div>');
   var button = $('<button class="addVbutton"><i class="fas fa-plus"></i></button>');
   $(button).click(function () {
+    //creates new text box
     $(this).parent().parent().find(".versions").append(createSubTextArea());
   });
   $(button).addClass("smallSize");
@@ -358,13 +373,14 @@ function createEducation(num, category) {
   $(fieldset).append("<legend>Education " + num + "</legend>");
   $(fieldset).append(createInput("School or University", "text", "schoolOrUni"));
   //adds degree dropdown
-  $(fieldset).append(createDropdown("Degree", ['Bachelors', 'Masterss'], "state", "state"));
+  $(fieldset).append(createDropdown("Degree", ["Bachelor's Degree or Equivalent Degree",
+    "Associate's Degree or 2-year Equivalent Degree", "Master's Degree or Equivalent Degree", "Masters in Business Administration (MBA)", "Doctorate or Equivalent Degree", "Juris Doctor (JD/J.Dur.)", "Medical Doctor or Equivalent", "Other Degree"], "dropdown", "degreeDropdown"));
   $(fieldset).append(createInput("Field of Study", "text", "FOS"));
   $(fieldset).append(createInput("GPA", "text", "GPA"));
   $(fieldset).append(createInput("From", "month", "from"));
   $(fieldset).append(createInput("To (Actual or Expected)", "month", "to"));
   $(fieldset).append(createTextArea("Role Description", "role-description"));
-
+  $(fieldset).append(createButtons());
   $(category).append(fieldset)
   return fieldset;
 

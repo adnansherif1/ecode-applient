@@ -8,6 +8,8 @@
     body {
       min-height: 100%;
       min-width: 500px;
+
+
     }
 
     body,
@@ -23,6 +25,7 @@
       color: #666;
       line-height: 22px;
     }
+
 
     legend {
       color: #fff;
@@ -246,6 +249,28 @@
       bottom: 50px;
     }
 
+    #help {
+      position: absolute;
+      width: 50px;
+      height: 35px;
+      right: 50px;
+
+    }
+
+    #helpIMG {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      position: fixed;
+      width: 70%;
+      height: 70%;
+      visibility: hidden;
+      z-index: 99;
+
+
+
+    }
+
 
     button:hover {
       background: #4286f4;
@@ -282,8 +307,20 @@
 </head>
 
 <body>
+
+
+
   <div class="testbox">
+
+
     <div id="form" class="form">
+
+
+      <!--help image we want to display-->
+      <img id="helpIMG" src="helpIMG.png">
+
+      <!--Help button-->
+      <button id="help">help</button>
       <div class="activity">
         <a href=./Search/search.html> <button id="searching">SEARCH MODE</button></a>
         <button id="filling">FILL MODE</button>
@@ -340,7 +377,7 @@
         </div>
         <div class="item">
           <label for="email">Email<span>*</span></label>
-          <input id="email" class="email" type="text" name="text" required />
+          <input id="email" class="email" type="email" name="text" required />
         </div>
         <div class="item">
           <label for="phone">Phone<span>*</span></label>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+
+
+<head>
+    <!-- what does this do-->
+    <meta name="viewport" content="width=device-width" , initial-scale=1.0>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Sign up Form</title>
+    <link rel="stylesheet" href="Login Page/main.css">
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id"
+        content="816203003271-urfc4e74rfi0jajpvimfna23l4kcq1n2.apps.googleusercontent.com">
+
+
+
+</head>
+
+<body>
+
+
+
+    <!-- "White block", creates a container for the login page-->
+    <div class="container">
+        <!-- creates login form form.form#login form.form = form with class of form #login = id of login-->
+        <form action="index.html" class="form" id="login">
+
+
+
+            <!--Creates a heading with class form title, with the heading Login-->
+            <h1 class="formTitle">Login</h1>
+            <!-- Runs if user submits incorrect username/password, only puts up if the user has a incorrect username/password combo-->
+            <div class="formMessage formMessageError">Incorrect username/password combination</div>
+
+            <!-- Group that has the input itself, and the error message-->
+            <!--Username Box-->
+            <div class="formInputGroup">
+
+                <!--   input.formInput add placeholder, placeholder tells us to submit email. Autofocus makes it run on page hold-->
+                <input type="text" class="formInput" autofocus placeholder="Email">
+
+                <!--  In case an error occurs -->
+                <div class="formInputErrorMessage">Error Message</div>
+
+            </div>
+
+            <!--Password Box -->
+            <div class="formInputGroup">
+                <!--   input.formInput add placeholder, placeholder tells us to submit email. Autofocus makes it run on page hold-->
+                <input type="password" class="formInput" autofocus placeholder="Password">
+
+                <!--  In case an error occurs -->
+                <div class="formInputErrorMessage"></div>
+
+            </div>
+
+            <!-- Creates a submit button -->
+            <button class="formButton" type="submit">Login</button>
+
+
+
+            <!--In case user forgot password-->
+            <p class="formText">
+                <a href="https://www.login.gov/help/trouble-signing-in/forgot-your-password/" class="formLink">Forgot
+                    your password</a>
+            </p>
+            <!--In case doesnt have acount-->
+            <p class="formText">
+                <!--there is no link for creating an account, simply a way to transfer to the next form from that id-->
+                <a id="linkCreateAccount" class="formLink">Create Account</a>
+            </p>
+
+        </form>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+    </div>
+</body>

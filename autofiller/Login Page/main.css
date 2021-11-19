@@ -1,0 +1,47 @@
+body { 
+    /* creates variables for colors */
+    --color-primary: blue;
+    --color-primary-dark: darkblue;
+    --color-secondary: rgb(241, 241, 241);
+    --color-error:red;
+    --color-success:green;
+    --border-radius: 4px;
+
+
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    /*puts content in middle*/
+    justify-content: center;
+    font-size: 18px;
+    background: lightblue;
+
+    /*makes background color covers entire backgorund */
+    background-size: cover;
+
+
+}
+
+/* start working on login box */
+.container {
+
+    width: 600px;
+    max-width: 600px;
+
+    /* one rem = one of the font size. ie. 1rem = 18px, 2rem = 36px */
+    margin: 1rem;
+    padding: 2rem;
+    box-shadow: 0 0 40px rgba(0,0,0,0.2);
+    border-radius: var(--border-radius);
+    background: lightblue;
+
+
+}
+
+.formInput {
+
+    width: 200px;
+    height: 20px;
+
+}

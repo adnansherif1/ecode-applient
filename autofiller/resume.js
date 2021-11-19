@@ -7,6 +7,10 @@ window.onload = function () {
   createEducation(numFieldset("#education-information"), $("#education-information"))
 };
 
+//enables and disables scrolling
+function noScroll() {
+  window.scrollTo(0, 0)
+}
 
 function initPopup() {
   console.log("starting!");
@@ -31,6 +35,26 @@ function initPopup() {
     //button to add a new education section
     .addEventListener("click", function () {
       createEducation(numFieldset("#education-information"), $("#education-information"))
+    });
+
+
+
+  //help button functionality  
+  document
+    .getElementById("help")
+    .addEventListener("click", function () {
+      if (document.getElementById("helpIMG").style.visibility == "visible") {
+        document.getElementById("helpIMG").style.visibility = "hidden";
+
+
+
+      }
+      else {
+        document.getElementById("helpIMG").style.visibility = "visible";
+
+
+      }
+
     });
 
 
@@ -66,30 +90,36 @@ function initPopup() {
 
   //the delete button present inside each experience that deletes the experience.
   $(document).on('click', '.delete', function () {
+    //parent.parent corresponds to the div itsslf
+    console.log($(this).parent().parent())
     $(this).parent().parent().remove()
   })
 
   // the moveup button inside each experience that  swaps the experience with the one above it
   $(document).on('click', '.moveUp', function () {
     var fieldsetElement = $(this).parent().parent();
+
+    //if there exists a previous element within the given fieldset, go up
     if ($(fieldsetElement).prev().prop('tagName') === "FIELDSET") {
+      var replacementTxt = $(fieldsetElement).find("legend:first").text();
       var newLegendText = $(fieldsetElement).prev().find("legend:first").text();
-      var currentLegendText = $(fieldsetElement).find("legend:first").text();
-      $(fieldsetElement).prev().find("legend:first").text(currentLegendText);
+      $(fieldsetElement).prev().find("legend:first").text(replacementTxt);
       $(fieldsetElement).find("legend:first").text(newLegendText);
-      $(fieldsetElement).insertBefore($(fieldsetElement).prev())
+      $(fieldsetElement.prev()).insertAfter($(fieldsetElement));
     };
+
   });
   // the movedown button inside each experience that swaps the experience with the one below it
   $(document).on('click', '.moveDown', function () {
     var fieldsetElement = $(this).parent().parent();
+    //if there exists a previous element within the given fieldset, go down
     if ($(fieldsetElement).next().prop('tagName') === "FIELDSET") {
       var newLegendText = $(fieldsetElement).next().find("legend:first").text();
       var currentLegendText = $(fieldsetElement).find("legend:first").text();
       $(fieldsetElement).next().find("legend:first").text(currentLegendText);
       $(fieldsetElement).find("legend:first").text(newLegendText);
+      $(fieldsetElement).insertAfter($(fieldsetElement.next()));
       console.log($(fieldsetElement).prev().find("legend").text());
-      $(fieldsetElement).insertAfter($(fieldsetElement).next())
     };
   });
   // these are the other buttons on the navigation bar correpsonding to the search mode and track mode
@@ -376,7 +406,7 @@ function createEducation(num, category) {
   $(fieldset).append(createDropdown("Degree", ["Bachelor's Degree or Equivalent Degree",
     "Associate's Degree or 2-year Equivalent Degree", "Master's Degree or Equivalent Degree", "Masters in Business Administration (MBA)", "Doctorate or Equivalent Degree", "Juris Doctor (JD/J.Dur.)", "Medical Doctor or Equivalent", "Other Degree"], "dropdown", "degreeDropdown"));
   $(fieldset).append(createInput("Field of Study", "text", "FOS"));
-  $(fieldset).append(createInput("GPA", "text", "GPA"));
+  $(fieldset).append(createInput("GPA", "number", "GPA"));
   $(fieldset).append(createInput("From", "month", "from"));
   $(fieldset).append(createInput("To (Actual or Expected)", "month", "to"));
   $(fieldset).append(createTextArea("Role Description", "role-description"));

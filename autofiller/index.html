@@ -489,8 +489,14 @@
         </div>
       </fieldset>
       <br />
-      <fieldset id="education-information">
+
+
+
+
+      <fieldset>
         <legend>Education</legend>
+        <!---
+        <div id="fieldset-education"></div>
         <div class="item">
           <label for="university">School or University<span>*</span></label>
           <input id="university" class="university" type="text" name="text" required />
@@ -527,7 +533,31 @@
         <div class="item">
           <label for="to">To (Actual or Expected)</label>
           <input id="to" class="to" type="text" name="text" required />
+        </div> --->
+        <div id="education-information"></div>
+
+        <div id="initial-education"></div>
+
+        <button id="education-add">Add</button>
+        <!---
+        <div class="item">
+          <label for="state">Degree<span>*</span></label>
+          <select id="state" class="state">
+            <option value="BS">Bachelor's Degree or Equivalent Degree</option>
+            <option value="AS">
+              Associate's Degree or 2-year Equivalent Degree
+            </option>
+            <option value="MS">Master's Degree or Equivalent Degree</option>
+            <option value="MBA">
+              Masters in Business Administration (MBA)
+            </option>
+            <option value="DOC">Doctorate or Equivalent Degree</option>
+            <option value="JD">Juris Doctor (JD/J.Dur.)</option>
+            <option value="MED">Medical Doctor or Equivalent</option>
+            <option value="OD">Other Degree</option>
+          </select>
         </div>
+      --->
         <div class="item">
           <label for="related-skills">Related Skills</label>
           <input id="related-skills" class="related-skills" type="text" name="text" placeholder="eg. python" />
@@ -536,7 +566,17 @@
           <label for="relevant-courses">Relevant Courses</label>
           <input id="relevant-courses" class="relevant-courses" type="text" name="text" placeholder="eg. CS 61A" />
         </div>
+
+
       </fieldset>
+
+
+
+
+
+
+
+
       <br />
 
       <fieldset class="filling">

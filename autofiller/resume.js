@@ -1,75 +1,47 @@
 sel = [];
 window.addEventListener("load", initPopup);
 
-//creates initial education section
-
-window.onload = function () {
-  createEducation(numFieldset("#education-information"), $("#education-information"))
-};
-
-
 function initPopup() {
   console.log("starting!");
-  // creating corresponds to resume section
   $("#creating").css("background-color", "lightblue");
-  // creating section is hidden as the autofilling section is shown by default. It is swapped by the
-  // the creating section when the Create mode button is pressed
   $('.creating').hide();
   document.getElementById("form").addEventListener("submit", form);
-  //button that swaps to filling mode
+  //add experiences
   document.getElementById("filling").addEventListener("click", function () {
     toggleActivity("filling");
   });
-  // button that swaps to creating mode
   document.getElementById("creating").addEventListener("click", function () {
     toggleActivity("creating");
-  })
-
-  document
-    .getElementById("education-add")
-
-    //button to add a new education section
-    .addEventListener("click", function () {
-      createEducation(numFieldset("#education-information"), $("#education-information"))
-    });
-
-
-  // button that adds a new experience in the filling mode (autofiller)
+  });
   document
     .getElementById("experience-add")
     .addEventListener("click", function () {
       createExperience(numFieldset("#fieldset-experiences"), $("#fieldset-experiences"))
     });
-  // button that adds new experiences in the first categroy in the creating mode( reusme generation)
+
   document
     .getElementById("category-one-add")
     .addEventListener("click", function () {
       createExperience(numFieldset("#category1"), $("#category1"))
     });
-  // button that adds new experiences in the second category in the creating mode (resume generation)
   document
     .getElementById("category-two-add")
     .addEventListener("click", function () {
       createExperience(numFieldset("#category2"), $("#category2"))
     });
-  // button that adds new experiences in the  third category in the creating mode (resume geenration)
   document
     .getElementById("category-three-add")
     .addEventListener("click", function () {
       createExperience(numFieldset("#category3"), $("#category3"))
     });
-  // button that calls the function to collect and save all the information in both the autofilling 
-  // and resume creating mode to the chrome extension or the remote server
   document
     .getElementById("application-save")
     .addEventListener("click", saveData);
 
-  //the delete button present inside each experience that deletes the experience.
   $(document).on('click', '.delete', function () {
     $(this).parent().parent().remove()
   })
 
-  // the moveup button inside each experience that  swaps the experience with the one above it
   $(document).on('click', '.moveUp', function () {
     var fieldsetElement = $(this).parent().parent();
     if ($(fieldsetElement).prev().prop('tagName') === "FIELDSET") {
@@ -80,7 +52,7 @@ function initPopup() {
       $(fieldsetElement).insertBefore($(fieldsetElement).prev())
     };
   });
-  // the movedown button inside each experience that swaps the experience with the one below it
+
   $(document).on('click', '.moveDown', function () {
     var fieldsetElement = $(this).parent().parent();
     if ($(fieldsetElement).next().prop('tagName') === "FIELDSET") {
@@ -92,19 +64,16 @@ function initPopup() {
       $(fieldsetElement).insertAfter($(fieldsetElement).next())
     };
   });
-  // these are the other buttons on the navigation bar correpsonding to the search mode and track mode
-  //the following code sets the color of those buttons
+
   $("#searching").css("background-color", "lightblue");
   $("#tracking").css("background-color", "lightblue");
   $("#app-fill").hide();
-  //the follwoing code loads the data from the extension and displays it in the correspondinng sections
-  // and input boxes
   data_loader('userinfo', dataHandler);
   data_loader('table_data', function (data) {
-    if (data) { } else {
+    if(data) {} else{
 
       var result = {};
-      data_saver(result, 'table_data');
+      data_saver(result,'table_data');
     }
   });
 
@@ -191,11 +160,11 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         var currTab = tabs[0];   
    console.log(currTab);
    chrome.tabs.executeScript(currTab.id, { file: "jquery-3.1.1.min.js" }, function() {
-      console.log('first');
+   	console.log('first');
     chrome.tabs.executeScript(currTab.id, { file: "faker.js" }, function() {
-      console.log('third');
+    	console.log('third');
         chrome.tabs.executeScript(currTab.id, { file: "run.js" }, function () {
-          console.log('forth');
+        	console.log('forth');
         });
       });  
     }); 
@@ -215,10 +184,7 @@ function createInput(labelText, inpType, inpClass) {
 function createSubTextArea() {
   var inp = $('<input type="checkbox"class="selected"/>');
   var deleteButton = $("<button class = 'delete' ><i class='fas fa-times'></i></button>")
-
-  //when the input changes run the statement
   $(inp).change(function () {
-    // this.propchecked says if "this" (input) is checked, then save the value, if not do nothing.
     if ($(this).prop("checked")) {
       var value = $(this).parent().parent().find(".role-version").focus().val();
       console.log("role: " + value);
@@ -245,12 +211,9 @@ function createSubTextArea() {
   var textarea = $(
     '<textarea class="role-version" style="height: 100%; max-height: 200px; min-height: 100px;"></textarea>'
   );
-  //not sure what this does
-  $(textarea).on("input", function () {
-
+  $(textarea).on("input",function () {
     if ($(this).parent().parent().find(".selected").prop("checked")) {
       $(this).closest("fieldset").find(".role-description").focus().val($(this).focus().val());
-      console.log($(this).closest("fieldset").find(".role-description").focus().val())
     }
   });
   var div1 = $('<div style="float:left; width: 10%"></div>');
@@ -276,7 +239,6 @@ function initSubTextArea() {
   var divOuter = $('<div class="versionsOuter"></div>');
   var button = $('<button class="addVbutton"><i class="fas fa-plus"></i></button>');
   $(button).click(function () {
-    //creates new text box
     $(this).parent().parent().find(".versions").append(createSubTextArea());
   });
   $(button).addClass("smallSize");
@@ -365,44 +327,6 @@ function createExperience(num, category) {
   return fieldset;
 }
 
-//add in an Education Section
-function createEducation(num, category) {
-  console.log("add another education")
-  var fieldset = $("<fieldset></fieldset>");
-  $(fieldset).append(createSelector(num))
-  $(fieldset).append("<legend>Education " + num + "</legend>");
-  $(fieldset).append(createInput("School or University", "text", "schoolOrUni"));
-  //adds degree dropdown
-  $(fieldset).append(createDropdown("Degree", ["Bachelor's Degree or Equivalent Degree",
-    "Associate's Degree or 2-year Equivalent Degree", "Master's Degree or Equivalent Degree", "Masters in Business Administration (MBA)", "Doctorate or Equivalent Degree", "Juris Doctor (JD/J.Dur.)", "Medical Doctor or Equivalent", "Other Degree"], "dropdown", "degreeDropdown"));
-  $(fieldset).append(createInput("Field of Study", "text", "FOS"));
-  $(fieldset).append(createInput("GPA", "text", "GPA"));
-  $(fieldset).append(createInput("From", "month", "from"));
-  $(fieldset).append(createInput("To (Actual or Expected)", "month", "to"));
-  $(fieldset).append(createTextArea("Role Description", "role-description"));
-  $(fieldset).append(createButtons());
-  $(category).append(fieldset)
-  return fieldset;
-
-
-}
-
-function createDropdown(labelText, arrayValue, inpType, inpClass) {
-  var label = $("<label></label>").text(labelText)
-  var select = $("<select id = " + inpType + " class= " + inpClass + "></select>");
-
-
-  //for each i in arrayValue, append the value to option
-  arrayValue.forEach(element =>
-    $(select).append($("<option></option>").text(element))
-  );
-  var div = $("<div></div>");
-  $(div).append(label)
-  $(div).append(select)
-  return div
-
-}
-
 function saveData() {
   var application = {};
   var personal = $("#personal-information");
@@ -460,11 +384,11 @@ function saveData() {
       application["experience"][num]["versionnum"] = versions;
     });
   /*
-  var selArr = []
-  for(var j = 1; j <=num; j++) {
-    selArr.push(j);
-  }
-  */
+	var selArr = []
+	for(var j = 1; j <=num; j++) {
+		selArr.push(j);
+	}
+	*/
   application["experience"]["num"] = num;
   application["experience"]["sel"] = sel;
   //chrome.storage.sync.set(application, function () {});
